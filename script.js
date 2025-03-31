@@ -5,20 +5,28 @@ class MemoryGame {
                 "images/animals/tiger.png", "images/animals/dog.png",
                 "images/animals/cat.png", "images/animals/monkey.png",
                 "images/animals/lion.png", "images/animals/squirrel.png",
-                "images/animals/panda.png", "images/animals/rabbit.png"
+                "images/animals/panda.png", "images/animals/rabbit.png",
+                "images/animals/turtle.png", "images/animals/hedgehog.png"
             ],
             anime: [
                 "images/anime/naruto.png", "images/anime/luffy.png",
                 "images/anime/goku.png",  "images/anime/sasuke.png",
                 "images/anime/tanjiro.png", "images/anime/nezuko.png",
-                "images/anime/zoro.png", "images/anime/yamato.png"
+                "images/anime/zoro.png", "images/anime/yamato.png",
+                "images/anime/hancock.png", "images/anime/robin.png"
             ],
             flags: [
                 "images/flags/australia.png", "images/flags/france.png", 
                 "images/flags/germany.png", "images/flags/italy.png", 
                 "images/flags/japan.png", "images/flags/portugal.png", 
-                "images/flags/usa.png", "images/flags/vietnam.png"
+                "images/flags/usa.png", "images/flags/vietnam.png",
+                "images/flags/spain.png", "images/flags/brazil.png"
             ]
+        };
+        this.difficultyLevels = {
+            easy: 6,
+            medium: 8,
+            hard: 10
         };
         this.cards = [];
         this.flippedCards = [];
@@ -27,6 +35,7 @@ class MemoryGame {
         this.flippedCount = 0;
         this.highScore = localStorage.getItem("highScore") || 0;
         document.getElementById("categorySelect").addEventListener("change", () => this.startGame());
+        document.getElementById("level").addEventListener("change", () => this.startGame());
         document.getElementById("startButton").addEventListener("click", () => this.startGame());
         document.getElementById("restartButton").addEventListener("click", () => this.startGame());
         document.getElementById("rulesButton").addEventListener("click", () => this.toggleRules());
@@ -46,7 +55,10 @@ class MemoryGame {
 
     startGame() {
         let selectedCategory = document.getElementById("categorySelect").value;
-        let images = this.categories[selectedCategory].concat(this.categories[selectedCategory]);
+        let selectedLevel = document.getElementById("level").value;
+        let imgCount = this.difficultyLevels[selectedLevel];
+        let images = this.shuffle([...this.categories[selectedCategory]]).slice(0, imgCount);
+        images = images.concat(images);
         if (!images) return;
 
         this.moves = 0;
@@ -60,8 +72,11 @@ class MemoryGame {
         document.getElementById("gameBoard").innerHTML = "";
         document.getElementById("winMessage").style.display = "none";
         
-        this.cards = this.shuffle([...images]);
+        this.cards = this.shuffle(images);
         this.cards.forEach(imgSrc => this.createCard(imgSrc));
+
+        let columns = Math.ceil(Math.sqrt(images.length)); 
+        document.getElementById("gameBoard").style.gridTemplateColumns = `repeat(${columns}, 100px)`;
     }   
 
     createCard(imgSrc) {
