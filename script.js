@@ -2,26 +2,22 @@ class MemoryGame {
     constructor() {
         this.categories = {
             animals: [
-                "images/animals/tiger.png", "images/animals/tiger.png", "images/animals/dog.png", "images/animals/dog.png",
-                "images/animals/cat.png", "images/animals/cat.png", "images/animals/monkey.png", "images/animals/monkey.png",
-                "images/animals/lion.png", "images/animals/lion.png", "images/animals/squirrel.png", "images/animals/squirrel.png",
-                "images/animals/panda.png", "images/animals/panda.png", "images/animals/rabbit.png", "images/animals/rabbit.png"
+                "images/animals/tiger.png", "images/animals/dog.png",
+                "images/animals/cat.png", "images/animals/monkey.png",
+                "images/animals/lion.png", "images/animals/squirrel.png",
+                "images/animals/panda.png", "images/animals/rabbit.png"
             ],
             anime: [
-                "images/anime/naruto.png", "images/anime/naruto.png", "images/anime/luffy.png", "images/anime/luffy.png",
-                "images/anime/goku.png", "images/anime/goku.png", "images/anime/sasuke.png", "images/anime/sasuke.png",
-                "images/anime/tanjiro.png", "images/anime/tanjiro.png", "images/anime/nezuko.png", "images/anime/nezuko.png",
-                "images/anime/zoro.png", "images/anime/zoro.png", "images/anime/yamato.png", "images/anime/yamato.png"
+                "images/anime/naruto.png", "images/anime/luffy.png",
+                "images/anime/goku.png",  "images/anime/sasuke.png",
+                "images/anime/tanjiro.png", "images/anime/nezuko.png",
+                "images/anime/zoro.png", "images/anime/yamato.png"
             ],
             flags: [
-                "images/flags/australia.png", "images/flags/australia.png",
-                "images/flags/france.png", "images/flags/france.png",
-                "images/flags/germany.png", "images/flags/germany.png",
-                "images/flags/italy.png", "images/flags/italy.png",
-                "images/flags/japan.png", "images/flags/japan.png",
-                "images/flags/portugal.png", "images/flags/portugal.png",
-                "images/flags/usa.png", "images/flags/usa.png",
-                "images/flags/vietnam.png", "images/flags/vietnam.png"
+                "images/flags/australia.png", "images/flags/france.png", 
+                "images/flags/germany.png", "images/flags/italy.png", 
+                "images/flags/japan.png", "images/flags/portugal.png", 
+                "images/flags/usa.png", "images/flags/vietnam.png"
             ]
         };
         this.cards = [];
@@ -50,7 +46,7 @@ class MemoryGame {
 
     startGame() {
         let selectedCategory = document.getElementById("categorySelect").value;
-        let images = this.categories[selectedCategory];
+        let images = this.categories[selectedCategory].concat(this.categories[selectedCategory]);
         if (!images) return;
 
         this.moves = 0;
