@@ -33,12 +33,21 @@ class MemoryGame {
         this.moves = 0;
         this.score = 100;
         this.flippedCount = 0;
-        this.highScore = localStorage.getItem("highScore") || 0;
+        const highScoreEasy = document.getElementById("highScoreEasy");
+        const highScoreMedium = document.getElementById("highScoreMedium");
+        const highScoreHard = document.getElementById("highScoreHard");
+        this.highScore = {
+            easy: localStorage.getItem("highScore_easy") || 0,
+            medium: localStorage.getItem("highScore_medium") || 0,
+            hard: localStorage.getItem("highScore_hard") || 0
+        };
         document.getElementById("categorySelect").addEventListener("change", () => this.startGame());
         document.getElementById("level").addEventListener("change", () => this.startGame());
+        document.getElementById("level").addEventListener("change", () => this.updateHighScore());
         document.getElementById("startButton").addEventListener("click", () => this.startGame());
         document.getElementById("restartButton").addEventListener("click", () => this.startGame());
         document.getElementById("rulesButton").addEventListener("click", () => this.toggleRules());
+        document.getElementById("resetHighScore").addEventListener("click", () => this.resetHighScores());
         this.startGame();
     }
     toggleRules() {
@@ -56,6 +65,7 @@ class MemoryGame {
     startGame() {
         let selectedCategory = document.getElementById("categorySelect").value;
         let selectedLevel = document.getElementById("level").value;
+        // document.getElementById("highScore").innerText = this.highScore[selectedLevel];
         let imgCount = this.difficultyLevels[selectedLevel];
         let images = this.shuffle([...this.categories[selectedCategory]]).slice(0, imgCount);
         images = images.concat(images);
@@ -64,11 +74,13 @@ class MemoryGame {
         this.moves = 0;
         this.score = 100;
         this.flippedCards = [];
-        this.highScore = localStorage.getItem("highScore") || 0;
+        this.flippedCount = 0;
+        // this.highScore = localStorage.getItem("highScore") || 0;
 
         document.getElementById("moves").innerText = this.moves;
         document.getElementById("score").innerText = this.score;
-        document.getElementById("highScore").innerText = this.highScore;
+        document.getElementById("currentHighScore").innerText = this.highScore[selectedLevel];
+        // document.getElementById(`highScore${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}`).innerText = this.highScore[selectedLevel];
         document.getElementById("gameBoard").innerHTML = "";
         document.getElementById("winMessage").style.display = "none";
         
@@ -77,6 +89,8 @@ class MemoryGame {
 
         let columns = Math.ceil(Math.sqrt(images.length)); 
         document.getElementById("gameBoard").style.gridTemplateColumns = `repeat(${columns}, 100px)`;
+
+        // this.updatesHighScore(selectedLevel);
     }   
 
     createCard(imgSrc) {
@@ -110,17 +124,18 @@ class MemoryGame {
         
         if (card1.dataset.image === card2.dataset.image) {
             this.flippedCards = [];
-            this.flippedCount += 2;
+            this.flippedCount ++;;
             // if (document.querySelectorAll(".card.flipped").length === this.cards.length) {
-            if (this.flippedCount === this.cards.length) {
+            if (this.flippedCount === this.cards.length / 2) {
                 setTimeout(() => this.showWinMessage(), 300);
             }
         } else {
             this.score = Math.max(0, this.score - 5);
             document.getElementById("score").innerText = this.score;
-            setTimeout(() => this.resetCards(card1, card2), 800);
+            setTimeout(() => this.resetCards(card1, card2), 1000);
         }
     }
+    
 
     resetCards(card1, card2) {
         card1.classList.remove("flipped");
@@ -130,17 +145,31 @@ class MemoryGame {
         this.flippedCards = [];
     }
 
+    updatesHighScore(selectedLevel) {
+        this.highScore[selectedLevel] = localStorage.getItem(`highScore_${selectedLevel}`) || 0;
+        document.getElementById(`highScore${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}`).innerText = this.highScore[selectedLevel];
+    }
+
     showWinMessage() {
         document.getElementById("winMessage").style.display = "block";
         document.getElementById("finalScore").innerText = this.score;
+        let selectedLevel = document.getElementById("level").value;
         
-        if (this.score > this.highScore) {
-            this.highScore = this.score;
-            localStorage.setItem("highScore", this.highScore);
-            document.getElementById("highScore").innerText = this.highScore;
-            document.getElementById("winHighScore").innerText = this.highScore;
+        if (this.score > this.highScore[selectedLevel]) {
+            this.highScore[selectedLevel] = this.score;
+            localStorage.setItem(`highScore_${selectedLevel}`, this.score);
+            this.updateHighScoreDisplay();
         } else {
-            document.getElementById("winHighScore").innerText = this.highScore;
+            document.getElementById("winHighScore").innerText = this.highScore[selectedLevel];
+        }
+    }
+
+    resetHighScores() {
+        if (confirm('Bạn có chắc chắn muốn reset điểm cao nhất không?')) {
+            localStorage.clear();
+            this.highScore = { easy: 0, medium: 0, hard: 0 };
+            this.updateHighScore();
+            alert('Điểm cao nhất đã được reset!');
         }
     }
 }

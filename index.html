@@ -14,26 +14,33 @@
             🧠 Memory Game
         </h1>
 
-        <!-- Chọn độ khó -->
-        <label for="level" style="font-size: 20px; font-weight: bold;">Chọn độ khó: </label>
-        <select id="level"
-        style="font-size: 18px; padding: 10px; border-radius: 10px; border: 2px solid #007bff; cursor: pointer; 
-            background: white; color: #333; font-weight: bold; margin-bottom: 20px;">
-            <option value="easy">Dễ</option>
-            <option value="medium">Vừa</option>
-            <option value="hard">Khó</option>
-        </select>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 20px;">
 
-        <!-- Chọn chủ đề -->
-        <label for="categorySelect" style="font-size: 20px; font-weight: bold;">Chọn chủ đề: </label>
-        <select id="categorySelect" 
-            style="font-size: 18px; padding: 10px; border-radius: 10px; border: 2px solid #007bff; cursor: pointer; 
-            background: white; color: #333; font-weight: bold; margin-bottom: 20px;">
-            <option value="animals">🐾 Động vật</option>
-            <option value="anime">🎌 Anime</option>
-            <option value="flags">🏴 Quốc kỳ</option>
-        </select>
+            <!-- Chọn độ khó -->
+             <div>
+                <label for="level" style="font-size: 20px; font-weight: bold;">Level: </label>
+                <select id="level"
+                style="font-size: 18px; padding: 10px; border-radius: 10px; border: 2px solid #007bff; cursor: pointer; 
+                    background: white; color: #333; font-weight: bold; margin-bottom: 20px;">
+                    <option value="easy">🐣 Dễ</option>
+                    <option value="medium">🏋️ Vừa</option>
+                    <option value="hard">💀 Khó</option>
+                </select>
+            </div>
 
+            <!-- Chọn chủ đề -->
+            <div>
+                <label for="categorySelect" style="font-size: 20px; font-weight: bold;">Topic: </label>
+                <select id="categorySelect" 
+                    style="font-size: 18px; padding: 10px; border-radius: 10px; border: 2px solid #007bff; cursor: pointer; 
+                    background: white; color: #333; font-weight: bold; margin-bottom: 20px;">
+                    <option value="animals">🐾 Động vật</option>
+                    <option value="anime">🎌 Anime</option>
+                    <option value="flags">🏴 Quốc kỳ</option>
+                </select>
+            </div>
+        </div>
+        
         <div id="gameBoard" style="margin-top: 20px;"></div>
 
         <button id="rulesButton">👇 Hướng dẫn</button>
@@ -61,6 +68,15 @@
                 🔄 Chơi lại
             </button>
         </div>
+
+            <button id="resetHighScore"
+                style="font-size: 18px; padding: 10px 20px; background: red; color: white;
+                border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;"
+                onmouseover="this.style.background='darkred'"
+                onmouseout="this.style.background='red'">
+                🔄 Reset Điểm Cao
+            </button>
+
         <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px;">
             <!-- Nút bắt đầu -->
             <button id="startButton" 
@@ -76,7 +92,7 @@
                 <p style="font-size: 24px; margin: 8px 0;">🕹️ Lượt chơi: <strong><span id="moves">0</span></strong></p>
                 <p style="font-size: 24px; font-weight: bold; color: #2E8B57; margin: 8px 0;">💯 Điểm số: <strong><span id="score">100</span></strong></p>
                 <p style="font-size: 24px; color: crimson; font-weight: bold; margin: 8px 0;">
-                    🏆 Điểm cao nhất: <strong><span id="highScore">0</span></strong>
+                    🏆 Điểm cao nhất: <strong><span id="currentHighScore">0</span></strong>
                 </p>
             </div>
         </div>
