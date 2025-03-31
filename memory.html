@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game - Hình Ảnh</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div style="text-align: center; font-family: Arial, sans-serif;">
+
+        <!-- Tiêu đề Memory Game -->
+        <h1 style="font-size: 50px; font-weight: bold; color: #333; text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);">
+            🧠 Memory Game
+        </h1>
+
+        <!-- Chọn chủ đề -->
+        <label for="categorySelect" style="font-size: 20px; font-weight: bold;">Chọn chủ đề: </label>
+        <select id="categorySelect" 
+            style="font-size: 18px; padding: 10px; border-radius: 10px; border: 2px solid #007bff; cursor: pointer; 
+            background: white; color: #333; font-weight: bold; margin-bottom: 20px;">
+            <option value="animals">🐾 Động vật</option>
+            <option value="anime">🎌 Anime</option>
+            <option value="flags">🏴 Quốc kỳ</option>
+        </select>
+
+        <div id="gameBoard" style="margin-top: 20px;"></div>
+
+        <button id="rulesButton">👇 Hướng dẫn</button>
+        <div id="rules">
+            <h2>📜 Luật Chơi</h2>
+            <p>🎴 Trò chơi gồm một bộ thẻ có các cặp hình giống nhau.</p>
+            <p>🔄 Mỗi lượt, người chơi lật hai thẻ.</p>
+            <p>✅ Nếu hai thẻ giống nhau, người chơi giữ cặp thẻ và tiếp tục.</p>
+            <p>❌ Nếu hai thẻ khác nhau, chúng sẽ bị úp lại.</p>
+            <p>⚡ <strong>Lưu ý:</strong> Mỗi lần đoán sai, bạn sẽ bị trừ <strong>5 điểm</strong>! 🚨</p>
+            <p>🏆 Trò chơi kết thúc khi tất cả cặp thẻ được tìm thấy.</p>
+        </div>  
+
+        <!-- Thông báo chiến thắng -->
+        <div id="winMessage" 
+            style="display: none; text-align: center; font-size: 24px; color: green; margin-top: 10px; 
+            padding: 15px; border: 2px solid green; border-radius: 10px; background: #e6ffe6;">
+            🎉 <strong>Chúc mừng! Bạn đã chiến thắng!</strong> 🎉
+            <p style="font-size: 25px; color: black;">🏅 Điểm cuối cùng của bạn: <strong><span id="finalScore">0</span></strong></p>
+            <p style="font-size: 25px; color: crimson;">🏆 Điểm cao nhất: <strong><span id="winHighScore">0</span></strong></p>
+            <button id="restartButton" 
+                style="font-size: 20px; padding: 10px 20px; background: #007bff; color: white; "
+                onmouseover="this.style.background='#0056b3'"
+                onmouseout="this.style.background='#007bff'">
+                🔄 Chơi lại
+            </button>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px;">
+            <!-- Nút bắt đầu -->
+            <button id="startButton" 
+                style="font-size: 20px; padding: 12px 22px; background: #28a745; color: white; 
+                border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;"
+                onmouseover="this.style.background='#218838'" 
+                onmouseout="this.style.background='#28a745'">
+                🎮 Bắt đầu
+            </button>
+
+            <!-- Hộp điểm số -->
+            <div style="padding: 15px; border: 2px solid #ccc; border-radius: 10px; background: #f9f9f9;">
+                <p style="font-size: 24px; margin: 8px 0;">🕹️ Lượt chơi: <strong><span id="moves">0</span></strong></p>
+                <p style="font-size: 24px; font-weight: bold; color: #2E8B57; margin: 8px 0;">💯 Điểm số: <strong><span id="score">100</span></strong></p>
+                <p style="font-size: 24px; color: crimson; font-weight: bold; margin: 8px 0;">
+                    🏆 Điểm cao nhất: <strong><span id="highScore">0</span></strong>
+                </p>
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
