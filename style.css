@@ -72,7 +72,8 @@ button:hover {
     transition: transform 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.card:hover {
+.card:hover {  
+    /* di chuột phóng to ảnh và có bóng */
     transform: scale(1.08);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -81,7 +82,7 @@ button:hover {
 .card img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover;  /* Giữ nguyên tỉ lệ ảnh */
     border-radius: 10px;
 }
 
@@ -133,7 +134,7 @@ body {
 
 /* Thông báo chiến thắng */
 #winMessage {
-    position: fixed;
+    position: fixed;  /* Hiển thị giữa màn hình */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

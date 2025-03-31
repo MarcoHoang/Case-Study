@@ -34,9 +34,9 @@ class MemoryGame {
         this.score = 100;
         this.flippedCount = 0;
         this.highScore = {
-            easy: localStorage.getItem("highScore_easy") || 0,
-            medium: localStorage.getItem("highScore_medium") || 0,
-            hard: localStorage.getItem("highScore_hard") || 0
+            easy: parseInt(localStorage.getItem("highScore_easy")) || 0,
+            medium: parseInt(localStorage.getItem("highScore_medium")) || 0,
+            hard: parseInt(localStorage.getItem("highScore_hard")) || 0
         };
         document.getElementById("categorySelect").addEventListener("change", () => this.startGame());
         document.getElementById("level").addEventListener("change", () => this.startGame());
