@@ -100,7 +100,8 @@ class MemoryGame {
         if (card1.dataset.image === card2.dataset.image) {
             this.flippedCards = [];
             this.flippedCount += 2;
-            if (document.querySelectorAll(".card.flipped").length === this.cards.length) {
+            // if (document.querySelectorAll(".card.flipped").length === this.cards.length) {
+            if (this.flippedCount === this.cards.length) {
                 setTimeout(() => this.showWinMessage(), 300);
             }
         } else {
