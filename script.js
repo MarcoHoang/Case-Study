@@ -40,7 +40,6 @@ class MemoryGame {
         };
         document.getElementById("categorySelect").addEventListener("change", () => this.startGame());
         document.getElementById("level").addEventListener("change", () => this.startGame());
-        document.getElementById("level").addEventListener("change", () => this.updateHighScore());
         document.getElementById("startButton").addEventListener("click", () => this.startGame());
         document.getElementById("restartButton").addEventListener("click", () => this.startGame());
         document.getElementById("rulesButton").addEventListener("click", () => this.toggleRules());
@@ -61,7 +60,6 @@ class MemoryGame {
     startGame() {
         let selectedCategory = document.getElementById("categorySelect").value;
         let selectedLevel = document.getElementById("level").value;
-        // document.getElementById("highScore").innerText = this.highScore[selectedLevel];
         let imgCount = this.difficultyLevels[selectedLevel];
         let images = this.shuffle([...this.categories[selectedCategory]]).slice(0, imgCount);
         images = images.concat(images);
@@ -71,12 +69,10 @@ class MemoryGame {
         this.score = 100;
         this.flippedCards = [];
         this.flippedCount = 0;
-        // this.highScore = localStorage.getItem("highScore") || 0;
 
         document.getElementById("moves").innerText = this.moves;
         document.getElementById("score").innerText = this.score;
         document.getElementById("currentHighScore").innerText = this.highScore[selectedLevel];
-        // document.getElementById(`highScore${selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1)}`).innerText = this.highScore[selectedLevel];
         document.getElementById("gameBoard").innerHTML = "";
         document.getElementById("winMessage").style.display = "none";
 
@@ -85,8 +81,6 @@ class MemoryGame {
 
         let columns = Math.ceil(Math.sqrt(images.length));
         document.getElementById("gameBoard").style.gridTemplateColumns = `repeat(${columns}, 100px)`;
-
-        // this.updatesHighScore(selectedLevel);
     }
 
     createCard(imgSrc) {
@@ -121,7 +115,6 @@ class MemoryGame {
         if (card1.dataset.image === card2.dataset.image) {
             this.flippedCards = [];
             this.flippedCount ++;
-            // if (document.querySelectorAll(".card.flipped").length === this.cards.length) {
             if (this.flippedCount === this.cards.length / 2) {
                 setTimeout(() => this.showWinMessage(), 300);
             }
@@ -154,10 +147,8 @@ class MemoryGame {
         if (this.score > this.highScore[selectedLevel]) {
             this.highScore[selectedLevel] = this.score;
             localStorage.setItem(`highScore_${selectedLevel}`, this.score);
-            this.updateHighScore();
-        } else {
-            document.getElementById("winHighScore").innerText = this.highScore[selectedLevel];
-        }
+            this.updateHighScore(selectedLevel);
+        }   
     }
 }
 
