@@ -45,6 +45,7 @@ class MemoryGame {
         document.getElementById("rulesButton").addEventListener("click", () => this.toggleRules());
         this.startGame();
     }
+
     toggleRules() {
         let rules = document.getElementById("rules");
         if (rules.style.display === "none" || rules.style.display === "") {
@@ -53,8 +54,14 @@ class MemoryGame {
             rules.style.display = "none";
         }
     }
+
     shuffle(array) {
-        return array.sort(() => 0.5 - Math.random());
+        // return array.sort(() => 0.5 - Math.random());
+        for ( let i = array.length - 1; i > 0; i-- ) {
+            let j = Math.floor(Math.random() * (i+ 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     startGame() {
@@ -63,7 +70,7 @@ class MemoryGame {
         let imgCount = this.difficultyLevels[selectedLevel];
         let images = this.shuffle([...this.categories[selectedCategory]]).slice(0, imgCount);
         images = images.concat(images);
-        if (!images) return;
+        // if (!images) return;
 
         this.moves = 0;
         this.score = 100;
@@ -99,13 +106,14 @@ class MemoryGame {
     }
 
     flipCard(card) {
-        if (this.flippedCards.length < 2 && !card.classList.contains("flipped")) {
+        if (this.flippedCards.length < 2 && !card.disabled) {
+            card.disabled = true;
             card.classList.add("flipped");
             card.innerHTML = `<img src="${card.dataset.image}" alt="Lêu Lêu">`;
             this.flippedCards.push(card);
             if (this.flippedCards.length === 2) this.checkMatch();
         }
-    }
+    }   
 
     checkMatch() {
         this.moves++;
@@ -116,9 +124,13 @@ class MemoryGame {
             this.flippedCards = [];
             this.flippedCount ++;
             if (this.flippedCount === this.cards.length / 2) {
+                card1.disabled = true;
+                card2.disabled = true;
                 setTimeout(() => this.showWinMessage(), 300);
             }
         } else {
+            card1.disabled = false;
+            card2.disabled = false;
             this.score = Math.max(0, this.score - 5);
             document.getElementById("score").innerText = this.score;
             setTimeout(() => this.resetCards(card1, card2), 1000);
